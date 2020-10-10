@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,13 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { qsAll, createDomFromURL } from "../dom";
-export class EuropornstarScraper {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EuropornstarScraper = void 0;
+const dom_1 = require("../dom");
+class EuropornstarScraper {
     constructor() {
         this.domain = "europornstar.com";
     }
     getImageLinks(dom, url) {
-        return Array.from(qsAll(dom, ".thumbs .th a")).map((el) => {
+        return Array.from(dom_1.qsAll(dom, ".thumbs .th a")).map((el) => {
             return url + el.getAttribute("href");
         });
     }
@@ -21,7 +24,7 @@ export class EuropornstarScraper {
         return __awaiter(this, void 0, void 0, function* () {
             const urlSegments = url.split("/").filter(Boolean);
             const gallery = urlSegments.pop().replace(".html", "");
-            const dom = yield createDomFromURL(url);
+            const dom = yield dom_1.createDomFromURL(url);
             const links = this.getImageLinks(dom, url);
             return {
                 gallery,
@@ -30,3 +33,4 @@ export class EuropornstarScraper {
         });
     }
 }
+exports.EuropornstarScraper = EuropornstarScraper;

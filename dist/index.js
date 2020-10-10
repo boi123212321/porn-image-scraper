@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,21 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { scrapeLink, dryRun } from "./scrapers";
-import argv from "./args";
+Object.defineProperty(exports, "__esModule", { value: true });
+const scrapers_1 = require("./scrapers");
+const args_1 = require("./args");
 (() => __awaiter(void 0, void 0, void 0, function* () {
-    let urls = argv._;
+    let urls = args_1.default._;
     if (!urls.length) {
         console.error("(ts-)node . url0 url1 ...");
         console.error("Run with --help for details");
         process.exit(1);
     }
-    if (argv.dry) {
-        console.log(yield dryRun(urls));
+    if (args_1.default.dry) {
+        console.log(yield scrapers_1.dryRun(urls));
     }
     else {
         for (const url of urls) {
-            yield scrapeLink(url);
+            yield scrapers_1.scrapeLink(url);
         }
     }
     process.exit();

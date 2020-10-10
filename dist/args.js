@@ -1,4 +1,7 @@
-export default yargs.options({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const yargs = require("yargs");
+exports.default = yargs.options({
     dry: {
         alias: "d",
         type: "boolean",

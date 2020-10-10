@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,30 +8,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { PornStarScraper } from "./pornstar";
-import { BabesourceScraper } from "./babesource";
-import { downloadImages } from "../download";
-import { TubsexerScraper } from "./tubsexer";
-import { CoedcherryScraper } from "./coedcherry";
-import { PornpicsScraper } from "./pornpics";
-import { SweetPornstarsScraper } from "./sweet-pornstars";
-import { EuropornstarScraper } from "./europornstar";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.dryRun = exports.scrapeLink = void 0;
+const pornstar_1 = require("./pornstar");
+const babesource_1 = require("./babesource");
+const download_1 = require("../download");
+const tubsexer_1 = require("./tubsexer");
+const coedcherry_1 = require("./coedcherry");
+const pornpics_1 = require("./pornpics");
+const sweet_pornstars_1 = require("./sweet-pornstars");
+const europornstar_1 = require("./europornstar");
 const scrapers = [
-    new BabesourceScraper(),
-    new PornStarScraper(),
-    new TubsexerScraper(),
-    new CoedcherryScraper(),
-    new PornpicsScraper(),
-    new SweetPornstarsScraper(),
-    new EuropornstarScraper(),
+    new babesource_1.BabesourceScraper(),
+    new pornstar_1.PornStarScraper(),
+    new tubsexer_1.TubsexerScraper(),
+    new coedcherry_1.CoedcherryScraper(),
+    new pornpics_1.PornpicsScraper(),
+    new sweet_pornstars_1.SweetPornstarsScraper(),
+    new europornstar_1.EuropornstarScraper(),
 ];
-export function scrapeLink(url) {
+function scrapeLink(url) {
     return __awaiter(this, void 0, void 0, function* () {
         console.error(`Getting ${url}...`);
         const scraper = scrapers.find((t) => url.includes(t.domain));
         if (scraper) {
             const result = yield scraper.scrape(url);
-            yield downloadImages(result.gallery, result.links.filter(Boolean));
+            yield download_1.downloadImages(result.gallery, result.links.filter(Boolean));
         }
         else {
             console.error("Unsupported site: " + url);
@@ -38,7 +41,8 @@ export function scrapeLink(url) {
         }
     });
 }
-export function dryRun(urls) {
+exports.scrapeLink = scrapeLink;
+function dryRun(urls) {
     return __awaiter(this, void 0, void 0, function* () {
         console.error("Dry run...");
         const result = {};
@@ -61,3 +65,4 @@ export function dryRun(urls) {
         return result;
     });
 }
+exports.dryRun = dryRun;

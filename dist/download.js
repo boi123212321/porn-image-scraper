@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,21 +8,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { createWriteStream, mkdirSync, existsSync, unlinkSync } from "fs";
-import { join, basename, resolve } from "path";
-import Axios from "axios";
-import { SingleBar, Presets } from "cli-progress";
-import argv from "./args";
-const baseFolder = resolve(argv.folder);
-if (!existsSync(baseFolder)) {
-    mkdirSync(baseFolder);
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.downloadFile = exports.downloadImages = void 0;
+const fs_1 = require("fs");
+const path_1 = require("path");
+const axios_1 = require("axios");
+const cli_progress_1 = require("cli-progress");
+const args_1 = require("./args");
+const baseFolder = path_1.resolve(args_1.default.folder);
+if (!fs_1.existsSync(baseFolder)) {
+    fs_1.mkdirSync(baseFolder);
 }
-export function downloadImages(gallery, urls) {
+function downloadImages(gallery, urls) {
     return __awaiter(this, void 0, void 0, function* () {
-        const galleryFolder = join(baseFolder, gallery);
-        if (!existsSync(galleryFolder)) {
+        const galleryFolder = path_1.join(baseFolder, gallery);
+        if (!fs_1.existsSync(galleryFolder)) {
             try {
-                mkdirSync(galleryFolder);
+                fs_1.mkdirSync(galleryFolder);
             }
             catch (err) {
                 console.error("Could not create gallery folder");
@@ -29,7 +32,7 @@ export function downloadImages(gallery, urls) {
             }
         }
         for (const url of urls) {
-            const path = join(galleryFolder, basename(url));
+            const path = path_1.join(galleryFolder, path_1.basename(url));
             let linkDone = false;
             while (!linkDone) {
                 try {
@@ -39,7 +42,7 @@ export function downloadImages(gallery, urls) {
                 catch (error) {
                     console.error("Error downloading url:", url);
                     try {
-                        unlinkSync(path);
+                        fs_1.unlinkSync(path);
                     }
                     catch (err) { }
                     console.error("Retrying url:", url);
@@ -48,21 +51,22 @@ export function downloadImages(gallery, urls) {
         }
     });
 }
-export function downloadFile(url, file) {
+exports.downloadImages = downloadImages;
+function downloadFile(url, file) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (existsSync(file)) {
+        if (fs_1.existsSync(file)) {
             console.warn(`\t${url} already exists, skipping...`);
             return;
         }
         console.error(`\tDownloading ${url} to ${file}...`);
-        const downloadBar = new SingleBar({}, Presets.legacy);
+        const downloadBar = new cli_progress_1.SingleBar({}, cli_progress_1.Presets.legacy);
         downloadBar.start(100, 0);
-        const response = yield Axios({
+        const response = yield axios_1.default({
             url: url,
             method: "GET",
             responseType: "stream",
         });
-        const writer = createWriteStream(file);
+        const writer = fs_1.createWriteStream(file);
         const totalSize = response.headers["content-length"];
         let loaded = 0;
         response.data.on("data", (data) => {
@@ -78,3 +82,4 @@ export function downloadFile(url, file) {
         downloadBar.stop();
     });
 }
+exports.downloadFile = downloadFile;

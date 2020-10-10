@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,13 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { qsAll, createDomFromURL } from "../dom";
-export class PornStarScraper {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PornStarScraper = void 0;
+const dom_1 = require("../dom");
+class PornStarScraper {
     constructor() {
         this.domain = "porn-star.com";
     }
     getImageLinks(gallery, dom) {
-        return Array.from(qsAll(dom, ".thumbnails-gallery img"))
+        return Array.from(dom_1.qsAll(dom, ".thumbnails-gallery img"))
             .map((el) => {
             return el.getAttribute("src");
         })
@@ -23,7 +26,7 @@ export class PornStarScraper {
         return __awaiter(this, void 0, void 0, function* () {
             const urlSegments = url.split("/");
             const gallery = urlSegments[urlSegments.length - 2];
-            const dom = yield createDomFromURL(url);
+            const dom = yield dom_1.createDomFromURL(url);
             const links = this.getImageLinks(gallery, dom);
             return {
                 gallery,
@@ -32,3 +35,4 @@ export class PornStarScraper {
         });
     }
 }
+exports.PornStarScraper = PornStarScraper;
