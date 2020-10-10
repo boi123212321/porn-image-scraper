@@ -16,7 +16,7 @@ You'll need the node.js runtime (https://nodejs.org/en/)
 
 ```
 npm install
-node dist url0 url1 [...urls]
+(ts-)node dist url0 url1 url2
 ```
 
 With each url being 1 gallery.

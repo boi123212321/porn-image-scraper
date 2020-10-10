@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,128 +7,57 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-exports.__esModule = true;
-var pornstar_1 = require("./pornstar");
-var babesource_1 = require("./babesource");
-var download_1 = require("../download");
-var tubsexer_1 = require("./tubsexer");
-var coedcherry_1 = require("./coedcherry");
-var pornpics_1 = require("./pornpics");
-var sweet_pornstars_1 = require("./sweet-pornstars");
-var europornstar_1 = require("./europornstar");
-var scrapers = [
-    new babesource_1.BabesourceScraper(),
-    new pornstar_1.PornStarScraper(),
-    new tubsexer_1.TubsexerScraper(),
-    new coedcherry_1.CoedcherryScraper(),
-    new pornpics_1.PornpicsScraper(),
-    new sweet_pornstars_1.SweetPornstarsScraper(),
-    new europornstar_1.EuropornstarScraper(),
+import { PornStarScraper } from "./pornstar";
+import { BabesourceScraper } from "./babesource";
+import { downloadImages } from "../download";
+import { TubsexerScraper } from "./tubsexer";
+import { CoedcherryScraper } from "./coedcherry";
+import { PornpicsScraper } from "./pornpics";
+import { SweetPornstarsScraper } from "./sweet-pornstars";
+import { EuropornstarScraper } from "./europornstar";
+const scrapers = [
+    new BabesourceScraper(),
+    new PornStarScraper(),
+    new TubsexerScraper(),
+    new CoedcherryScraper(),
+    new PornpicsScraper(),
+    new SweetPornstarsScraper(),
+    new EuropornstarScraper(),
 ];
-function scrapeLink(url) {
-    return __awaiter(this, void 0, void 0, function () {
-        var scraper, result;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    console.error("Getting " + url + "...");
-                    scraper = scrapers.find(function (t) { return url.includes(t.domain); });
-                    if (!scraper) return [3 /*break*/, 3];
-                    return [4 /*yield*/, scraper.scrape(url)];
-                case 1:
-                    result = _a.sent();
-                    return [4 /*yield*/, download_1.downloadImages(result.gallery, result.links.filter(Boolean))];
-                case 2:
-                    _a.sent();
-                    return [3 /*break*/, 4];
-                case 3:
-                    console.error("Unsupported site: " + url);
-                    process.exit(1);
-                    _a.label = 4;
-                case 4: return [2 /*return*/];
-            }
-        });
+export function scrapeLink(url) {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.error(`Getting ${url}...`);
+        const scraper = scrapers.find((t) => url.includes(t.domain));
+        if (scraper) {
+            const result = yield scraper.scrape(url);
+            yield downloadImages(result.gallery, result.links.filter(Boolean));
+        }
+        else {
+            console.error("Unsupported site: " + url);
+            process.exit(1);
+        }
     });
 }
-exports.scrapeLink = scrapeLink;
-function dryRun(urls) {
-    return __awaiter(this, void 0, void 0, function () {
-        var result, _loop_1, _i, urls_1, url;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    console.error("Dry run...");
-                    result = {};
-                    _loop_1 = function (url) {
-                        var scraper, scraperResult, error_1;
-                        return __generator(this, function (_a) {
-                            switch (_a.label) {
-                                case 0:
-                                    scraper = scrapers.find(function (t) { return url.includes(t.domain); });
-                                    if (!scraper) return [3 /*break*/, 5];
-                                    _a.label = 1;
-                                case 1:
-                                    _a.trys.push([1, 3, , 4]);
-                                    return [4 /*yield*/, scraper.scrape(url)];
-                                case 2:
-                                    scraperResult = _a.sent();
-                                    result[url] = scraperResult;
-                                    return [3 /*break*/, 4];
-                                case 3:
-                                    error_1 = _a.sent();
-                                    console.error(error_1.message);
-                                    return [3 /*break*/, 4];
-                                case 4: return [3 /*break*/, 6];
-                                case 5:
-                                    console.error("Unsupported site: " + url);
-                                    process.exit(1);
-                                    _a.label = 6;
-                                case 6: return [2 /*return*/];
-                            }
-                        });
-                    };
-                    _i = 0, urls_1 = urls;
-                    _a.label = 1;
-                case 1:
-                    if (!(_i < urls_1.length)) return [3 /*break*/, 4];
-                    url = urls_1[_i];
-                    return [5 /*yield**/, _loop_1(url)];
-                case 2:
-                    _a.sent();
-                    _a.label = 3;
-                case 3:
-                    _i++;
-                    return [3 /*break*/, 1];
-                case 4: return [2 /*return*/, result];
+export function dryRun(urls) {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.error("Dry run...");
+        const result = {};
+        for (const url of urls) {
+            const scraper = scrapers.find((t) => url.includes(t.domain));
+            if (scraper) {
+                try {
+                    const scraperResult = yield scraper.scrape(url);
+                    result[url] = scraperResult;
+                }
+                catch (error) {
+                    console.error(error.message);
+                }
             }
-        });
+            else {
+                console.error("Unsupported site: " + url);
+                process.exit(1);
+            }
+        }
+        return result;
     });
 }
-exports.dryRun = dryRun;
