@@ -1,5 +1,8 @@
 import { scrapeLink, dryRun } from "./scrapers";
 import argv from "./args";
+import { downloadImages } from "./download";
+
+const imageExt = [".jpg", ".png", ".jpeg", ".webp"];
 
 (async () => {
   let urls = argv._;
@@ -14,6 +17,11 @@ import argv from "./args";
     console.log(await dryRun(urls));
   } else {
     for (const url of urls) {
+      if (imageExt.some((ext) => url.endsWith(ext))) {
+        await downloadImages(`_nogallery-${new Date().toISOString()}`, [url]);
+        continue;
+      }
+
       await scrapeLink(url);
     }
   }
