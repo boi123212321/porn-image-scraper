@@ -40,7 +40,7 @@ function downloadImages(gallery, urls) {
                     linkDone = true;
                 }
                 catch (error) {
-                    console.error("Error downloading url:", url);
+                    console.error("Error downloading url:", error.message);
                     try {
                         fs_1.unlinkSync(path);
                     }
@@ -62,7 +62,7 @@ function downloadFile(url, file) {
         const downloadBar = new cli_progress_1.SingleBar({}, cli_progress_1.Presets.legacy);
         downloadBar.start(100, 0);
         const response = yield axios_1.default({
-            url: url,
+            url: encodeURI(url),
             method: "GET",
             responseType: "stream",
         });

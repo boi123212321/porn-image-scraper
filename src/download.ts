@@ -30,7 +30,7 @@ export async function downloadImages(gallery: string, urls: string[]) {
         await downloadFile(url, path);
         linkDone = true;
       } catch (error) {
-        console.error("Error downloading url:", url);
+        console.error("Error downloading url:", error.message);
         try {
           unlinkSync(path);
         } catch (err) {}
@@ -52,7 +52,7 @@ export async function downloadFile(url: string, file: string) {
   downloadBar.start(100, 0);
 
   const response = await Axios({
-    url: url,
+    url: encodeURI(url),
     method: "GET",
     responseType: "stream",
   });
