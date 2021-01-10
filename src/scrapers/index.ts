@@ -6,7 +6,7 @@ import { CoedcherryScraper } from "./coedcherry";
 import { PornpicsScraper } from "./pornpics";
 import { SweetPornstarsScraper } from "./sweet-pornstars";
 import { EuropornstarScraper } from "./europornstar";
-import argv from "../args";
+import { ThumbnailSeriesScraper } from "./thumbnailseries";
 import { IScraperResult } from "./interface";
 
 const scrapers = [
@@ -17,6 +17,7 @@ const scrapers = [
   new PornpicsScraper(),
   new SweetPornstarsScraper(),
   new EuropornstarScraper(),
+  new ThumbnailSeriesScraper(),
 ];
 
 export async function scrapeLink(url: string) {

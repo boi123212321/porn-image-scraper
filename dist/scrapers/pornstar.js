@@ -24,7 +24,7 @@ class PornStarScraper {
     }
     scrape(url) {
         return __awaiter(this, void 0, void 0, function* () {
-            const urlSegments = url.split("/");
+            const urlSegments = url.split("/").filter(Boolean);
             const gallery = urlSegments[urlSegments.length - 2];
             const dom = yield dom_1.createDomFromURL(url);
             const links = this.getImageLinks(gallery, dom);

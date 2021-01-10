@@ -11,6 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const scrapers_1 = require("./scrapers");
 const args_1 = require("./args");
+const download_1 = require("./download");
+const imageExt = [".jpg", ".png", ".jpeg", ".webp"];
 (() => __awaiter(void 0, void 0, void 0, function* () {
     let urls = args_1.default._;
     if (!urls.length) {
@@ -23,6 +25,10 @@ const args_1 = require("./args");
     }
     else {
         for (const url of urls) {
+            if (imageExt.some((ext) => url.endsWith(ext))) {
+                yield download_1.downloadImages(`_nogallery-${new Date().toISOString()}`, [url]);
+                continue;
+            }
             yield scrapers_1.scrapeLink(url);
         }
     }

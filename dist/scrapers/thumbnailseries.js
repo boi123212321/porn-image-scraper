@@ -9,21 +9,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BabesourceScraper = void 0;
+exports.ThumbnailSeriesScraper = void 0;
 const dom_1 = require("../dom");
-class BabesourceScraper {
+class ThumbnailSeriesScraper {
     constructor() {
-        this.domain = "babesource.com";
+        this.domain = "thumbnailseries.com";
     }
     getImageLinks(dom) {
-        return Array.from(dom_1.qsAll(dom, ".thumbs.cf a:not(#startSlideshowAnchor)")).map((el) => {
-            return el.getAttribute("href");
+        return Array.from(dom_1.qsAll(dom, "#light-gallery > a")).map((el) => {
+            return `https://www.${this.domain}${el.getAttribute("href")}`;
         });
     }
     scrape(url) {
         return __awaiter(this, void 0, void 0, function* () {
             const urlSegments = url.split("/").filter(Boolean);
-            const gallery = urlSegments.pop().replace(".html", "");
+            console.log(urlSegments);
+            const gallery = urlSegments.pop();
             const dom = yield dom_1.createDomFromURL(url);
             const links = this.getImageLinks(dom);
             return {
@@ -33,4 +34,4 @@ class BabesourceScraper {
         });
     }
 }
-exports.BabesourceScraper = BabesourceScraper;
+exports.ThumbnailSeriesScraper = ThumbnailSeriesScraper;

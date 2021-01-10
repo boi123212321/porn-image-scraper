@@ -33,6 +33,7 @@ function downloadImages(gallery, urls) {
         }
         for (const url of urls) {
             const path = path_1.join(galleryFolder, path_1.basename(url));
+            let retryCount = 0;
             let linkDone = false;
             while (!linkDone) {
                 try {
@@ -46,6 +47,11 @@ function downloadImages(gallery, urls) {
                     }
                     catch (err) { }
                     console.error("Retrying url:", url);
+                    retryCount++;
+                    if (retryCount >= 100) {
+                        linkDone = true;
+                        console.error("Giving up on url:", url);
+                    }
                 }
             }
         }

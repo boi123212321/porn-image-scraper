@@ -17,7 +17,7 @@ export class PornStarScraper implements IScraper {
   }
 
   async scrape(url: string) {
-    const urlSegments = url.split("/");
+    const urlSegments = url.split("/").filter(Boolean);
     const gallery = urlSegments[urlSegments.length - 2];
 
     const dom = await createDomFromURL(url);
