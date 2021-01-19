@@ -10,6 +10,7 @@
 - sweet-pornstars.com
 - europornstar.com
 - thumbnailseries.com
+- pixhost.to
 
 ### How to
 

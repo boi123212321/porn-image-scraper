@@ -19,6 +19,7 @@ const pornpics_1 = require("./pornpics");
 const sweet_pornstars_1 = require("./sweet-pornstars");
 const europornstar_1 = require("./europornstar");
 const thumbnailseries_1 = require("./thumbnailseries");
+const pixhost_1 = require("./pixhost");
 const scrapers = [
     new babesource_1.BabesourceScraper(),
     new pornstar_1.PornStarScraper(),
@@ -28,6 +29,7 @@ const scrapers = [
     new sweet_pornstars_1.SweetPornstarsScraper(),
     new europornstar_1.EuropornstarScraper(),
     new thumbnailseries_1.ThumbnailSeriesScraper(),
+    new pixhost_1.PixhostScraper(),
 ];
 function scrapeLink(url) {
     return __awaiter(this, void 0, void 0, function* () {

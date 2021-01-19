@@ -9,15 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ThumbnailSeriesScraper = void 0;
+exports.PixhostScraper = void 0;
 const dom_1 = require("../dom");
-class ThumbnailSeriesScraper {
+class PixhostScraper {
     constructor() {
-        this.domain = "thumbnailseries.com";
+        this.domain = "pixhost.to";
     }
     getImageLinks(dom) {
-        return Array.from(dom_1.qsAll(dom, "#light-gallery > a")).map((el) => {
-            return `https://www.${this.domain}${el.getAttribute("href")}`;
+        return Array.from(dom_1.qsAll(dom, ".images a")).map((el) => {
+            return el.getAttribute("href");
         });
     }
     scrape(url) {
@@ -33,4 +33,4 @@ class ThumbnailSeriesScraper {
         });
     }
 }
-exports.ThumbnailSeriesScraper = ThumbnailSeriesScraper;
+exports.PixhostScraper = PixhostScraper;
