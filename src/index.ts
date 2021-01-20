@@ -4,11 +4,13 @@ import { downloadImages } from "./download";
 
 const imageExt = [".jpg", ".png", ".jpeg", ".webp"];
 
+const noGalleryName = `_nogallery-${new Date().toISOString()}`;
+
 (async () => {
   let urls = argv._;
 
   if (!urls.length) {
-    console.error("(ts-)node . url0 url1 ...");
+    console.error("node dist url0 url1 ...");
     console.error("Run with --help for details");
     process.exit(1);
   }
@@ -18,7 +20,7 @@ const imageExt = [".jpg", ".png", ".jpeg", ".webp"];
   } else {
     for (const url of urls) {
       if (imageExt.some((ext) => url.endsWith(ext))) {
-        await downloadImages(`_nogallery-${new Date().toISOString()}`, [url]);
+        await downloadImages(noGalleryName, [url]);
         continue;
       }
 

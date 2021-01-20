@@ -25,7 +25,13 @@ class PixhostScraper {
             const urlSegments = url.split("/").filter(Boolean);
             const gallery = urlSegments.pop();
             const dom = yield dom_1.createDomFromURL(url);
-            const links = this.getImageLinks(dom);
+            const imagePages = this.getImageLinks(dom);
+            const links = [];
+            for (const url of imagePages) {
+                const dom = yield dom_1.createDomFromURL(url);
+                const image = Array.from(dom_1.qsAll(dom, "#image"))[0];
+                links.push(image.getAttribute("src"));
+            }
             return {
                 gallery,
                 links,
