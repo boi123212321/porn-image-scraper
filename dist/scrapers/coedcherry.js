@@ -16,7 +16,7 @@ class CoedcherryScraper {
         this.domain = "coedcherry.com";
     }
     getImageLinks(dom) {
-        return Array.from(dom_1.qsAll(dom, "figure a")).map((el) => {
+        return Array.from(dom_1.qsAll(dom, `#gallery .thumbs figure[itemprop="associatedMedia"] a.track`)).map((el) => {
             return el.getAttribute("href");
         });
     }
