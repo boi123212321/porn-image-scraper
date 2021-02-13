@@ -27,7 +27,7 @@ const noGalleryName = `_nogallery-${new Date().toISOString()}`;
     else {
         for (const url of urls) {
             if (imageExt.some((ext) => url.endsWith(ext))) {
-                yield download_1.downloadImages(noGalleryName, [url]);
+                yield download_1.downloadGallery(noGalleryName, [url]);
                 continue;
             }
             yield scrapers_1.scrapeLink(url);

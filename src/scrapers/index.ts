@@ -1,6 +1,6 @@
 import { PornStarScraper } from "./pornstar";
 import { BabesourceScraper } from "./babesource";
-import { downloadImages } from "../download";
+import { downloadGallery } from "../download";
 import { TubsexerScraper } from "./tubsexer";
 import { CoedcherryScraper } from "./coedcherry";
 import { PornpicsScraper } from "./pornpics";
@@ -29,7 +29,7 @@ export async function scrapeLink(url: string) {
 
   if (scraper) {
     const result = await scraper.scrape(url);
-    await downloadImages(result.gallery, result.links.filter(Boolean));
+    await downloadGallery(result.gallery, result.links.filter(Boolean));
   } else {
     console.error("Unsupported site: " + url);
     process.exit(1);

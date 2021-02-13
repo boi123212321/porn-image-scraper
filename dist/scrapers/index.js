@@ -37,7 +37,7 @@ function scrapeLink(url) {
         const scraper = scrapers.find((t) => url.includes(t.domain));
         if (scraper) {
             const result = yield scraper.scrape(url);
-            yield download_1.downloadImages(result.gallery, result.links.filter(Boolean));
+            yield download_1.downloadGallery(result.gallery, result.links.filter(Boolean));
         }
         else {
             console.error("Unsupported site: " + url);

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.downloadFile = exports.downloadImages = void 0;
+exports.downloadFile = exports.downloadGallery = void 0;
 const fs_1 = require("fs");
 const path_1 = require("path");
 const axios_1 = require("axios");
@@ -19,7 +19,7 @@ const baseFolder = path_1.resolve(args_1.default.folder);
 if (!fs_1.existsSync(baseFolder)) {
     fs_1.mkdirSync(baseFolder);
 }
-function downloadImages(gallery, urls) {
+function downloadGallery(gallery, urls) {
     return __awaiter(this, void 0, void 0, function* () {
         const galleryFolder = path_1.join(baseFolder, gallery);
         if (!fs_1.existsSync(galleryFolder)) {
@@ -31,8 +31,10 @@ function downloadImages(gallery, urls) {
                 process.exit(1);
             }
         }
-        for (const url of urls) {
-            const path = path_1.join(galleryFolder, path_1.basename(url));
+        for (let i = 0; i < urls.length; i++) {
+            const num = (i + 1).toString().padStart(3, "0");
+            const url = urls[i];
+            const path = path_1.join(galleryFolder, num);
             let retryCount = 0;
             let linkDone = false;
             while (!linkDone) {
@@ -57,7 +59,7 @@ function downloadImages(gallery, urls) {
         }
     });
 }
-exports.downloadImages = downloadImages;
+exports.downloadGallery = downloadGallery;
 function downloadFile(url, file) {
     return __awaiter(this, void 0, void 0, function* () {
         if (fs_1.existsSync(file)) {

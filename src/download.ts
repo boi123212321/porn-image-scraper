@@ -9,7 +9,7 @@ if (!existsSync(baseFolder)) {
   mkdirSync(baseFolder);
 }
 
-export async function downloadImages(gallery: string, urls: string[]) {
+export async function downloadGallery(gallery: string, urls: string[]) {
   const galleryFolder = join(baseFolder, gallery);
 
   if (!existsSync(galleryFolder)) {
@@ -21,8 +21,10 @@ export async function downloadImages(gallery: string, urls: string[]) {
     }
   }
 
-  for (const url of urls) {
-    const path = join(galleryFolder, basename(url));
+  for (let i = 0; i < urls.length; i++) {
+    const num = (i + 1).toString().padStart(3, "0");
+    const url = urls[i];
+    const path = join(galleryFolder, num);
 
     let retryCount = 0;
 
