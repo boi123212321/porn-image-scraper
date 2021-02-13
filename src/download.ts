@@ -1,5 +1,5 @@
 import { createWriteStream, mkdirSync, existsSync, unlinkSync } from "fs";
-import { join, basename, resolve } from "path";
+import { join, extname, resolve } from "path";
 import Axios from "axios";
 import { SingleBar, Presets } from "cli-progress";
 import argv from "./args";
@@ -24,7 +24,8 @@ export async function downloadGallery(gallery: string, urls: string[]) {
   for (let i = 0; i < urls.length; i++) {
     const num = (i + 1).toString().padStart(3, "0");
     const url = urls[i];
-    const path = join(galleryFolder, num);
+    const ext = extname(url);
+    const path = join(galleryFolder, `${num}${ext}`);
 
     let retryCount = 0;
 

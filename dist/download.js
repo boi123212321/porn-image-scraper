@@ -34,7 +34,8 @@ function downloadGallery(gallery, urls) {
         for (let i = 0; i < urls.length; i++) {
             const num = (i + 1).toString().padStart(3, "0");
             const url = urls[i];
-            const path = path_1.join(galleryFolder, num);
+            const ext = path_1.extname(url);
+            const path = path_1.join(galleryFolder, `${num}${ext}`);
             let retryCount = 0;
             let linkDone = false;
             while (!linkDone) {
